@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nueva Solicitud - ZoFranca CR</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "on-tertiary-fixed-variant": "#004e5c",
+                "on-primary-fixed": "#001b3d",
+                "on-surface": "#e3e2e6",
+                "on-secondary": "#1d00a5",
+                "electric-indigo": "#6366F1",
+                "outline-variant": "#43474f",
+                "primary-container": "#002855",
+                "surface-bright": "#38393d",
+                "deep-navy": "#001B39",
+                "tertiary-fixed": "#acedff",
+                "surface-container-high": "#292a2d",
+                "on-surface-variant": "#c4c6d0",
+                "vibrant-cyan": "#22D3EE",
+                "on-tertiary-container": "#009db7",
+                "surface-container-lowest": "#0d0e11",
+                "tertiary-container": "#002d36",
+                "on-tertiary": "#003640",
+                "on-error": "#690005",
+                "surface-variant": "#343538",
+                "secondary-fixed": "#e2dfff",
+                "primary-fixed-dim": "#aac7fd",
+                "outline": "#8e909a",
+                "on-error-container": "#ffdad6",
+                "surface-tint": "#aac7fd",
+                "surface-container": "#1e2023",
+                "surface-container-highest": "#343538",
+                "surface-container-low": "#1a1c1f",
+                "on-primary-container": "#7490c3",
+                "secondary": "#c3c0ff",
+                "on-secondary-fixed-variant": "#3323cc",
+                "tertiary-fixed-dim": "#4cd7f6",
+                "on-tertiary-fixed": "#001f26",
+                "inverse-primary": "#415f8f",
+                "error-container": "#93000a",
+                "secondary-fixed-dim": "#c3c0ff",
+                "background": "#121317",
+                "secondary-container": "#3626ce",
+                "primary": "#aac7fd",
+                "surface": "#121317",
+                "inverse-on-surface": "#2f3034",
+                "on-secondary-fixed": "#0f0069",
+                "tertiary": "#4cd7f6",
+                "on-primary-fixed-variant": "#284775",
+                "primary-fixed": "#d6e3ff",
+                "on-background": "#e3e2e6",
+                "inverse-surface": "#e3e2e6",
+                "glass-stroke": "rgba(255, 255, 255, 0.15)",
+                "error": "#ffb4ab",
+                "on-primary": "#0c305d",
+                "surface-dim": "#121317",
+                "on-secondary-container": "#b3b1ff"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "margin-desktop": "64px",
+                "element-gap": "12px",
+                "section-gap": "48px",
+                "gutter": "24px",
+                "margin-mobile": "20px",
+                "container-max": "1280px"
+        }
+      }
+    }
+  }
+</script>
+<style>
+    .drag-active {
+        border-color: #6366F1 !important;
+        background-color: rgba(99, 102, 241, 0.1) !important;
+    }
+    .spinner {
+        animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    .glass-panel {
+        background: rgba(41, 42, 45, 0.4);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-stroke, rgba(255, 255, 255, 0.15));
+    }
+    .input-glow:focus-within {
+        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2), 0 0 12px rgba(99, 102, 241, 0.1);
+    }
+    body { min-height: max(884px, 100dvh); }
+</style>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen pb-safe">
+<!-- TopAppBar -->
+<header class="glass-panel text-on-surface fixed top-0 w-full z-50 transition-colors duration-200">
+<div class="flex justify-between items-center px-margin-mobile h-[64px] w-full">
+<button class="hover:bg-surface-container-highest p-2 rounded-full transition-colors active:opacity-80 text-on-surface-variant">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md-mobile md:text-headline-md font-bold text-on-surface">ZoFranca CR</h1>
+<button class="hover:bg-surface-container-highest p-2 rounded-full transition-colors active:opacity-80 text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<main class="pt-[88px] px-margin-mobile max-w-3xl mx-auto pb-32">
+<!-- Form Header -->
+<div class="mb-section-gap">
+<button class="flex items-center text-on-surface-variant hover:text-primary mb-element-gap transition-colors text-body-md font-body-md">
+<span class="material-symbols-outlined text-[18px] mr-1">arrow_back</span> Volver
+</button>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Nueva Solicitud</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Complete los datos de la empresa solicitante para iniciar el proceso de instalación.</p>
+</div>
+<!-- Main Form Card -->
+<div class="glass-panel rounded-xl p-6 shadow-lg">
+<div id="formAlert" class="hidden mb-4 p-4 rounded-lg text-white font-bold text-center"></div>
+<form class="space-y-section-gap" id="installationForm">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div class="flex flex-col gap-element-gap">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest" for="companyName">Nombre de la empresa</label>
+<div class="input-glow rounded-lg transition-all duration-300">
+<input class="w-full h-[48px] px-4 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:border-electric-indigo focus:ring-0 outline-none transition-colors" id="companyName" placeholder="Ej. TechCorp Ltda." type="text" required/>
+</div>
+</div>
+<div class="flex flex-col gap-element-gap">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest" for="sector">Sector</label>
+<div class="relative input-glow rounded-lg transition-all duration-300">
+<select class="w-full h-[48px] px-4 appearance-none bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:border-electric-indigo focus:ring-0 outline-none transition-colors" id="sector" required>
+<option disabled="" selected="" value="">Seleccione un sector</option>
+<option value="Tecnología">Tecnología</option>
+<option value="Ciencias">Ciencias de la Vida</option>
+<option value="Manufactura">Manufactura Avanzada</option>
+<option value="Servicios">Servicios Corporativos</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-element-gap">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest" for="investment">Inversión Proyectada (USD)</label>
+<div class="relative input-glow rounded-lg transition-all duration-300">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">attach_money</span>
+<input class="w-full h-[48px] pl-12 pr-4 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:border-electric-indigo focus:ring-0 outline-none transition-colors" id="investment" placeholder="0.00" type="number" required min="0"/>
+</div>
+</div>
+<div class="flex flex-col gap-element-gap">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest" for="jobs">Empleos Proyectados</label>
+<div class="relative input-glow rounded-lg transition-all duration-300">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">group</span>
+<input class="w-full h-[48px] pl-12 pr-4 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:border-electric-indigo focus:ring-0 outline-none transition-colors" id="jobs" placeholder="0" type="number" required min="0"/>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-element-gap mt-section-gap">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Documentos de Respaldo</label>
+<div class="border border-dashed border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center bg-surface-container-low/50 hover:bg-surface-container-low transition-all duration-300 cursor-pointer group hover:border-electric-indigo/50" id="dropZone">
+<span class="material-symbols-outlined text-4xl text-electric-indigo mb-3 group-hover:-translate-y-1 transition-transform group-hover:scale-110 duration-300">cloud_upload</span>
+<p class="font-body-md text-body-md text-on-surface font-medium text-center">Arrastra y suelta tus documentos aquí</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1 text-center">o haz clic para explorar archivos (PDF, DOCX, máx 10MB)</p>
+<input accept=".pdf,.doc,.docx" class="hidden" id="fileInput" multiple="" type="file"/>
+</div>
+<div class="flex flex-col gap-2 mt-2 empty:hidden" id="fileList"></div>
+</div>
+<div class="flex justify-end gap-gutter pt-gutter border-t border-surface-variant mt-section-gap">
+<button class="h-[48px] px-8 font-label-caps text-label-caps uppercase tracking-wider text-white bg-gradient-to-r from-electric-indigo to-vibrant-cyan rounded-lg shadow-[0_0_15px_rgba(99,102,241,0.3)] hover:shadow-[0_0_25px_rgba(34,211,238,0.5)] transition-all duration-300 flex items-center justify-center gap-2 min-w-[180px] border border-white/10" id="submitBtn" type="submit">
+<span class="btn-text">Enviar Solicitud</span>
+<span class="material-symbols-outlined text-[18px] hidden spinner" id="submitSpinner">progress_activity</span>
+</button>
+</div>
+</form>
+</div>
+
+<!-- ============================================== -->
+<!-- VISTAS DE RESULTADO (Ocultas por defecto)      -->
+<!-- ============================================== -->
+
+<!-- 1. Vista Éxito / Recomendada -->
+<div id="successView" class="hidden glass-panel rounded-xl p-8 shadow-lg flex-col items-center justify-center text-center mt-section-gap relative overflow-hidden border border-emerald-500/30">
+    <div class="absolute -right-20 -top-20 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="w-20 h-20 rounded-full bg-emerald-500/20 flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+        <span class="material-symbols-outlined text-emerald-400 text-5xl">check_circle</span>
+    </div>
+    <h3 class="text-2xl font-bold text-on-surface mb-2">¡Solicitud Altamente Recomendada!</h3>
+    <p class="text-on-surface-variant font-body-md mb-6 max-w-md">La evaluación de IA determinó un puntaje de <strong class="text-emerald-400" id="successScore">--/100</strong>. Tu perfil de inversión y generación de empleo cumple perfectamente con los objetivos del régimen.</p>
+    <div class="flex gap-4">
+        <button onclick="window.location.href='analista.html'" class="h-[48px] px-6 font-label-caps uppercase tracking-wider text-emerald-950 bg-emerald-400 rounded-lg shadow-[0_0_15px_rgba(16,185,129,0.4)] hover:shadow-[0_0_25px_rgba(16,185,129,0.6)] transition-all duration-300 font-bold">
+            Ir al Dashboard
+        </button>
+        <button onclick="resetFormView()" class="h-[48px] px-6 font-label-caps uppercase tracking-wider text-on-surface bg-surface-container-high border border-glass-stroke rounded-lg hover:bg-surface-variant transition-all duration-300">
+            Nueva Solicitud
+        </button>
+    </div>
+</div>
+
+<!-- 2. Vista Revisión Pendiente -->
+<div id="reviewView" class="hidden glass-panel rounded-xl p-8 shadow-lg flex-col items-center justify-center text-center mt-section-gap relative overflow-hidden border border-amber-500/30">
+    <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="w-20 h-20 rounded-full bg-amber-500/20 flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(245,158,11,0.3)]">
+        <span class="material-symbols-outlined text-amber-400 text-5xl">pending_actions</span>
+    </div>
+    <h3 class="text-2xl font-bold text-on-surface mb-2">Análisis Adicional Requerido</h3>
+    <p class="text-on-surface-variant font-body-md mb-6 max-w-md">La evaluación de IA determinó un puntaje de <strong class="text-amber-400" id="reviewScore">--/100</strong>. Algunos umbrales quedaron en rango de revisión, por lo que un analista verificará los datos manualmente.</p>
+    <div class="flex gap-4">
+        <button onclick="window.location.href='analista.html'" class="h-[48px] px-6 font-label-caps uppercase tracking-wider text-amber-950 bg-amber-400 rounded-lg shadow-[0_0_15px_rgba(245,158,11,0.4)] hover:shadow-[0_0_25px_rgba(245,158,11,0.6)] transition-all duration-300 font-bold">
+            Ver Estado en Dashboard
+        </button>
+    </div>
+</div>
+
+<!-- 3. Vista Rechazada -->
+<div id="rejectView" class="hidden glass-panel rounded-xl p-8 shadow-lg flex-col items-center justify-center text-center mt-section-gap relative overflow-hidden border border-red-500/30 bg-surface-container-low/50">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-red-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="w-20 h-20 rounded-full bg-red-500/20 flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(239,68,68,0.3)]">
+        <span class="material-symbols-outlined text-red-400 text-5xl">cancel</span>
+    </div>
+    <h3 class="text-2xl font-bold text-on-surface mb-2">Solicitud No Aprobada</h3>
+    <p class="text-on-surface-variant font-body-md mb-6 max-w-md">La IA determinó un puntaje de <strong class="text-red-400" id="rejectScore">--/100</strong>. Los montos de inversión o generación de empleo declarados no alcanzan los mínimos requeridos para el régimen.</p>
+    <div class="flex gap-4">
+        <button onclick="resetFormView()" class="h-[48px] px-6 font-label-caps uppercase tracking-wider text-red-950 bg-red-400 rounded-lg shadow-[0_0_15px_rgba(239,68,68,0.4)] hover:shadow-[0_0_25px_rgba(239,68,68,0.6)] transition-all duration-300 font-bold">
+            Modificar e Intentar de Nuevo
+        </button>
+    </div>
+</div>
+
+</main>
+<nav class="fixed bottom-0 w-full z-50 h-[72px] glass-panel flex justify-around items-center pb-safe md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-transform scale-95 active:scale-90 px-5 py-1 rounded-full" href="analista.html">
+<span class="material-symbols-outlined mb-1">description</span>
+<span class="font-label-sm text-label-sm">Requests</span>
+</a>
+</nav>
+<script type="module" src="../js/app.js"></script>
+</body></html>
