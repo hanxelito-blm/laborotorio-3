@@ -2,7 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const app = express();
-const PORT = 3000;
+const PORT = 3001;
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -41,19 +41,23 @@ app.get('/api/solicitudes', (req, res) => {
 app.post('/api/solicitudes', async (req, res) => {
     try {
         const nuevaSolicitud = req.body;
-        
+
+        if (!nuevaSolicitud || !nuevaSolicitud.empresa) {
+            return res.status(400).json({ error: 'Datos de solicitud inválidos' });
+        }
+
         // Simular tiempo de procesamiento de IA (2 segundos)
         await new Promise(resolve => setTimeout(resolve, 2000));
-        
+
         // Lógica de "IA" simulada
         const inversion = Number(nuevaSolicitud.inversion);
         const empleos = Number(nuevaSolicitud.empleos);
-        
+
         let puntaje = 50;
         let clasificacion = 'Revisar';
-        
+
         if (inversion >= 150000 && empleos >= 10) {
-            puntaje = Math.min(100, 60 + (inversion / 100000) + (empleos));
+            puntaje = Math.min(100, 60 + (inversion / 100000) + empleos);
             clasificacion = puntaje > 80 ? 'Recomendada' : 'Revisar';
         } else {
             puntaje = Math.max(0, 30 + (inversion / 200000));
@@ -76,10 +80,27 @@ app.post('/api/solicitudes', async (req, res) => {
 
         res.status(201).json(solicitudEvaluada);
     } catch (error) {
+        console.error('Error en POST /api/solicitudes:', error);
         res.status(500).json({ error: 'Error interno del servidor' });
     }
 });
 
-app.listen(PORT, () => {
+// Manejador global de errores (requerido en Express 5)
+app.use((err, req, res, next) => {
+    console.error('Error no manejado:', err.stack || err.message);
+    res.status(500).json({ error: 'Error interno del servidor' });
+});
+
+// Iniciar servidor con manejo de errores de puerto
+const server = app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
+
+server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+        console.error(`❌ El puerto ${PORT} ya está en uso. Cierra el proceso anterior e intenta de nuevo.`);
+    } else {
+        console.error('❌ Error al iniciar el servidor:', err.message);
+    }
+    process.exit(1);
 });

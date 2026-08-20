@@ -1,208 +1,425 @@
+/* ============================================================
+   ZoFranca CR — Dark Theme System
+   Deep Navy · Neon Glow · GovTech Aesthetics
+   ============================================================ */
+
+/* --- CSS Custom Properties (Design Tokens) --- */
 :root {
-    --primary-color: #004d99;
-    --primary-hover: #003366;
-    --bg-color: #f4f7f6;
-    --card-bg: #ffffff;
-    --text-main: #333333;
-    --text-muted: #666666;
-    --border-color: #e0e0e0;
-    --success: #2e7d32;
-    --warning: #f57c00;
-    --danger: #c62828;
-    --font-family: 'Inter', sans-serif;
+    /* Backgrounds */
+    --bg-app:          #070d19;
+    --bg-surface:      #0d1b32;
+    --bg-surface-high: #112240;
+    --bg-card:         #0d1b32;
+    --bg-input:        #0a1628;
+
+    /* Borders & Glows */
+    --border-subtle:   rgba(255, 255, 255, 0.07);
+    --border-card:     rgba(99, 155, 255, 0.12);
+    --glow-neon:       rgba(0, 255, 163, 0.25);
+    --glow-cyan:       rgba(34, 211, 238, 0.2);
+    --glow-indigo:     rgba(99, 102, 241, 0.25);
+
+    /* Neon Accent Colors */
+    --neon-green:      #00ffa3;
+    --neon-green-dark: #00cc80;
+    --neon-cyan:       #22d3ee;
+    --electric-indigo: #6366f1;
+
+    /* Text */
+    --text-primary:    #f0f4ff;
+    --text-secondary:  #94a3b8;
+    --text-muted:      #4a5568;
+
+    /* Status */
+    --success:         #00ffa3;
+    --warning:         #f59e0b;
+    --danger:          #ff6b6b;
+
+    /* Font */
+    --font-family:     'Inter', system-ui, sans-serif;
 }
 
-* {
+/* --- Reset & Base --- */
+*, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: var(--font-family);
-    background-color: var(--bg-color);
-    color: var(--text-main);
+    background-color: var(--bg-app);
+    color: var(--text-primary);
     line-height: 1.6;
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+/* ============================================================
+   GLASS PANEL — elevated surface with perimeter glow
+   ============================================================ */
+.glass-panel {
+    background: rgba(13, 27, 50, 0.65);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(99, 155, 255, 0.12);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+        0 4px 24px rgba(0, 0, 0, 0.4),
+        0 0 40px rgba(0, 255, 163, 0.03);
 }
 
-.navbar {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 1rem 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+/* Card hover: subtle ring pulse */
+.glass-panel:hover {
+    border-color: rgba(0, 255, 163, 0.18);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+        0 8px 32px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(0, 255, 163, 0.06);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.navbar h1 {
-    font-size: 1.5rem;
-    display: flex;
+/* ============================================================
+   INPUT GLOW
+   ============================================================ */
+.input-glow:focus-within {
+    box-shadow:
+        0 0 0 2px rgba(0, 255, 163, 0.15),
+        0 0 14px rgba(0, 255, 163, 0.08);
+}
+
+/* ============================================================
+   DRAG & DROP ACTIVE STATE
+   ============================================================ */
+.drag-active {
+    border-color: var(--neon-green) !important;
+    background-color: rgba(0, 255, 163, 0.06) !important;
+    box-shadow: 0 0 20px rgba(0, 255, 163, 0.15) !important;
+}
+
+/* ============================================================
+   NEON BUTTONS — Primary Action
+   ============================================================ */
+
+/* Base neon-green primary button */
+.btn-neon {
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
-}
-
-.badge {
-    background-color: rgba(255,255,255,0.2);
-    font-size: 0.8rem;
-    padding: 2px 8px;
-    border-radius: 12px;
-}
-
-.navbar p {
-    font-size: 0.9rem;
-    opacity: 0.8;
-}
-
-.layout {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-@media (max-width: 768px) {
-    .layout {
-        grid-template-columns: 1fr;
-    }
-}
-
-.card {
-    background: var(--card-bg);
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-}
-
-.card h2 {
-    margin-bottom: 1.5rem;
-    font-size: 1.25rem;
-    border-bottom: 2px solid var(--bg-color);
-    padding-bottom: 0.5rem;
-}
-
-.form-group {
-    margin-bottom: 1rem;
-}
-
-.form-group label {
-    display: block;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-}
-
-.form-group input, .form-group select {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    font-family: inherit;
-    transition: border-color 0.2s;
-}
-
-.form-group input:focus, .form-group select:focus {
-    outline: none;
-    border-color: var(--primary-color);
-}
-
-.btn-primary {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-    font-size: 1rem;
-    font-weight: 600;
-    display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 10px;
-    transition: background-color 0.2s;
+    gap: 8px;
+    padding: 0 2rem;
+    height: 48px;
+    font-family: var(--font-family);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #003322;
+    background: linear-gradient(135deg, #00ffa3 0%, #00cc80 100%);
+    border: 1px solid rgba(0, 255, 163, 0.4);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow:
+        0 0 15px rgba(0, 255, 163, 0.3),
+        0 2px 8px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
 }
 
-.btn-primary:hover {
-    background-color: var(--primary-hover);
+.btn-neon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.25s ease;
 }
 
-.btn-primary:disabled {
-    background-color: #999;
+.btn-neon:hover {
+    background: linear-gradient(135deg, #1affad 0%, #00e890 100%);
+    box-shadow:
+        0 0 25px rgba(0, 255, 163, 0.55),
+        0 0 50px rgba(0, 255, 163, 0.2),
+        0 4px 16px rgba(0, 0, 0, 0.5);
+    transform: translateY(-1px);
+}
+
+.btn-neon:hover::before { opacity: 1; }
+
+.btn-neon:active {
+    transform: translateY(0);
+    box-shadow: 0 0 12px rgba(0, 255, 163, 0.3);
+}
+
+.btn-neon:disabled {
+    opacity: 0.5;
     cursor: not-allowed;
+    transform: none;
 }
 
-.alert {
-    margin-top: 1rem;
-    padding: 0.75rem;
-    border-radius: 4px;
-    font-size: 0.9rem;
+/* Ghost / Secondary button */
+.btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 1.5rem;
+    height: 48px;
+    font-family: var(--font-family);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
 }
 
-.alert.error {
-    background-color: #ffebee;
-    color: var(--danger);
-    border: 1px solid #ffcdd2;
+.btn-ghost:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
-.alert.success {
-    background-color: #e8f5e9;
-    color: var(--success);
-    border: 1px solid #c8e6c9;
+/* Gradient indigo/cyan (legacy support) */
+.btn-gradient-primary {
+    background: linear-gradient(135deg, #6366F1, #3626ce);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35), 0 0 20px rgba(99, 102, 241, 0.15);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.btn-gradient-primary:hover {
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.55), 0 6px 20px rgba(0,0,0,0.4);
+    transform: translateY(-1px);
 }
 
-.hidden {
-    display: none !important;
+.btn-gradient-secondary {
+    background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
+/* ============================================================
+   FORM INPUTS — Dark Theme
+   ============================================================ */
+input, select, textarea {
+    font-family: var(--font-family);
+    color: var(--text-primary);
+    background: var(--bg-input);
+    border: 1px solid rgba(99, 155, 255, 0.15);
+    border-radius: 0.5rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--neon-green);
+    box-shadow: 0 0 0 2px rgba(0, 255, 163, 0.12), 0 0 12px rgba(0, 255, 163, 0.06);
+}
+
+input::placeholder { color: #3a5070; }
+select option { background: #0d1b32; color: var(--text-primary); }
+
+/* ============================================================
+   STATUS BADGES — Dark Neon Variants
+   ============================================================ */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+}
+
+.status-recomendada {
+    background: rgba(0, 255, 163, 0.12);
+    color: #00ffa3;
+    border-color: rgba(0, 255, 163, 0.25);
+    text-shadow: 0 0 8px rgba(0, 255, 163, 0.4);
+}
+
+.status-revisar {
+    background: rgba(245, 158, 11, 0.12);
+    color: #f59e0b;
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.status-rechazada {
+    background: rgba(255, 107, 107, 0.12);
+    color: #ff6b6b;
+    border-color: rgba(255, 107, 107, 0.3);
+}
+
+/* ============================================================
+   TABLES — Dark Themed
+   ============================================================ */
 table {
     width: 100%;
     border-collapse: collapse;
 }
 
 th, td {
-    padding: 0.75rem;
+    padding: 0.875rem 1rem;
     text-align: left;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 th {
-    background-color: var(--bg-color);
-    font-weight: 600;
-    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.02);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
 }
 
-.status-badge {
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    font-weight: 600;
+tr:hover td {
+    background: rgba(0, 255, 163, 0.025);
 }
 
-.status-recomendada { background-color: #e8f5e9; color: var(--success); }
-.status-revisar { background-color: #fff3e0; color: var(--warning); }
-.status-rechazada { background-color: #ffebee; color: var(--danger); }
+/* ============================================================
+   NAVIGATION — Bottom bar & Top header dark
+   ============================================================ */
+.navbar {
+    background: rgba(7, 13, 25, 0.9);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
 
-/* Spinners */
+/* ============================================================
+   KPI / METRIC CARDS (Bento Grid)
+   ============================================================ */
+.kpi-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-card);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.kpi-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(0, 255, 163, 0.03), transparent 60%);
+    pointer-events: none;
+}
+
+.kpi-card:hover {
+    border-color: rgba(0, 255, 163, 0.25);
+    box-shadow: 0 0 24px rgba(0, 255, 163, 0.08);
+}
+
+/* ============================================================
+   ALERTS
+   ============================================================ */
+.alert-error {
+    background: rgba(255, 107, 107, 0.1);
+    color: #ff6b6b;
+    border: 1px solid rgba(255, 107, 107, 0.25);
+    border-radius: 0.5rem;
+    padding: 0.875rem 1rem;
+}
+
+.alert-success {
+    background: rgba(0, 255, 163, 0.08);
+    color: #00ffa3;
+    border: 1px solid rgba(0, 255, 163, 0.2);
+    border-radius: 0.5rem;
+    padding: 0.875rem 1rem;
+}
+
+/* ============================================================
+   SPINNERS & LOADERS
+   ============================================================ */
 .spinner {
-    border: 3px solid rgba(255,255,255,0.3);
-    border-top: 3px solid white;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    animation: spin 1s linear infinite;
+    animation: spin 0.8s linear infinite;
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
 }
 
 .loader {
     text-align: center;
-    padding: 2rem;
-    color: var(--text-muted);
+    padding: 2.5rem;
+    color: var(--text-secondary);
+}
+
+/* ============================================================
+   SCROLLBAR — Dark Themed
+   ============================================================ */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track  { background: var(--bg-app); }
+::-webkit-scrollbar-thumb  {
+    background: rgba(99, 155, 255, 0.2);
+    border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 163, 0.35); }
+
+/* ============================================================
+   CIRCULAR PROGRESS (detalle.html)
+   ============================================================ */
+.circular-progress {
+    background: conic-gradient(#00ffa3 88%, rgba(255, 255, 255, 0.06) 0);
+    box-shadow: 0 0 24px rgba(0, 255, 163, 0.35);
+}
+
+/* ============================================================
+   UTILITY: Hidden
+   ============================================================ */
+.hidden { display: none !important; }
+
+/* ============================================================
+   RESPONSIVE HELPERS
+   ============================================================ */
+@media (max-width: 768px) {
+    .btn-neon, .btn-ghost { min-width: unset; }
+}
+
+/* ============================================================
+   AMBIENT GLOW — Background radial decoration
+   ============================================================ */
+body::before {
+    content: '';
+    position: fixed;
+    top: -20%;
+    left: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(0, 255, 163, 0.035) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    bottom: -20%;
+    right: -10%;
+    width: 55vw;
+    height: 55vw;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.04) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
 }

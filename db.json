@@ -44,6 +44,44 @@
         "clasificacion": "Recomendada",
         "fecha": "2026-08-20T17:55:36.366Z"
       }
+    },
+    {
+      "id": "1787257792069",
+      "empresa": "techcorpo ltda.",
+      "sector": "Tecnología",
+      "inversion": "100000",
+      "empleos": "236778",
+      "documentos": [
+        {
+          "nombre": "Currículum CV Asesor Financiero Masculino Básico Negro.pdf",
+          "tamaño": 273368
+        }
+      ],
+      "fecha": "2026-08-20T20:29:49.950Z",
+      "evaluacion": {
+        "puntaje": 31,
+        "clasificacion": "Rechazada",
+        "fecha": "2026-08-20T20:29:52.069Z"
+      }
+    },
+    {
+      "id": "1787258125854",
+      "empresa": "techcorpo ltda.",
+      "sector": "Servicios",
+      "inversion": "1000000",
+      "empleos": "1636446473",
+      "documentos": [
+        {
+          "nombre": "Currículum CV Asesor Financiero Masculino Básico Negro (1).pdf",
+          "tamaño": 277135
+        }
+      ],
+      "fecha": "2026-08-20T20:35:23.795Z",
+      "evaluacion": {
+        "puntaje": 100,
+        "clasificacion": "Recomendada",
+        "fecha": "2026-08-20T20:35:25.855Z"
+      }
     }
   ]
 }

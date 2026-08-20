@@ -131,42 +131,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
             solicitudes.forEach(sol => {
                 let badgeClass = '';
+                let badgeStyle = '';
                 let badgeIcon = '';
                 let badgeText = sol.evaluacion.clasificacion;
 
                 if (badgeText === 'Recomendada') {
-                    badgeClass = 'bg-[#22D3EE]/20 text-[#22D3EE] border-[#22D3EE]/30';
+                    badgeClass = 'text-[#00ffa3] border-[#00ffa3]/30';
+                    badgeStyle = 'background: rgba(0,255,163,0.1); text-shadow: 0 0 8px rgba(0,255,163,0.4);';
                     badgeIcon = 'check_circle';
                 } else if (badgeText === 'Revisar') {
-                    badgeClass = 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+                    badgeClass = 'text-amber-400 border-amber-500/30';
+                    badgeStyle = 'background: rgba(245,158,11,0.1);';
                     badgeIcon = 'pending_actions';
                 } else {
-                    badgeClass = 'bg-[#ffb4ab]/20 text-[#ffb4ab] border-[#ffb4ab]/30';
+                    badgeClass = 'text-[#ff6b6b] border-[#ff6b6b]/30';
+                    badgeStyle = 'background: rgba(255,107,107,0.1);';
                     badgeIcon = 'cancel';
                 }
 
                 const card = document.createElement('article');
-                card.className = 'bg-surface-container-lowest/40 backdrop-blur-xl rounded-xl p-5 border border-glass-stroke hover:border-outline-variant/50 hover:bg-surface-container-lowest/60 transition-all cursor-pointer flex flex-col justify-between h-full shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]';
+                card.className = 'backdrop-blur-xl rounded-2xl p-5 border transition-all cursor-pointer flex flex-col justify-between h-full';
+                card.style.cssText = 'background: rgba(13,27,50,0.65); border-color: rgba(99,155,255,0.12); box-shadow: 0 8px 32px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.04) inset;';
+                card.addEventListener('mouseover', () => {
+                    card.style.borderColor = 'rgba(0,255,163,0.2)';
+                    card.style.boxShadow = '0 12px 40px rgba(0,0,0,0.45), 0 0 20px rgba(0,255,163,0.06)';
+                });
+                card.addEventListener('mouseout', () => {
+                    card.style.borderColor = 'rgba(99,155,255,0.12)';
+                    card.style.boxShadow = '0 8px 32px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.04) inset';
+                });
                 card.innerHTML = `
                     <div class="space-y-3">
                         <div class="flex justify-between items-start gap-4">
-                            <h3 class="font-body-lg text-on-surface font-medium leading-tight">${sol.empresa}</h3>
-                            <span class="px-2.5 py-1 rounded-full ${badgeClass} text-xs flex items-center gap-1.5 border whitespace-nowrap">
-                                <span class="material-symbols-outlined text-[14px]">${badgeIcon}</span> ${badgeText}
+                            <h3 class="text-sm font-semibold text-[#f0f4ff] leading-tight">${sol.empresa}</h3>
+                            <span data-status="${badgeText}" class="px-2.5 py-1 rounded-full ${badgeClass} text-[10px] font-bold flex items-center gap-1 border whitespace-nowrap uppercase tracking-wide" style="${badgeStyle}">
+                                <span class="material-symbols-outlined text-[12px]">${badgeIcon}</span> ${badgeText}
                             </span>
                         </div>
-                        <div class="flex items-center gap-2.5 text-on-surface-variant text-sm">
-                            <span class="material-symbols-outlined text-[18px] opacity-70">domain</span>
+                        <div class="flex items-center gap-2 text-[#94a3b8] text-xs">
+                            <span class="material-symbols-outlined text-[16px] opacity-60">domain</span>
                             <span>${sol.sector}</span>
                         </div>
-                        <div class="flex items-center gap-2.5 text-on-surface-variant text-sm">
-                            <span class="material-symbols-outlined text-[18px] opacity-70">calendar_today</span>
+                        <div class="flex items-center gap-2 text-[#94a3b8] text-xs">
+                            <span class="material-symbols-outlined text-[16px] opacity-60">calendar_today</span>
                             <span>${new Date(sol.fecha).toLocaleDateString()}</span>
                         </div>
                     </div>
-                    <div class="mt-4 pt-3 border-t border-[rgba(255,255,255,0.15)] flex justify-between items-center">
-                        <span class="text-[#6366F1] font-bold">${sol.evaluacion.puntaje}/100 IA Score</span>
-                        <a href="detalle.html" class="material-symbols-outlined text-on-surface-variant hover:text-[#22D3EE] transition-colors">chevron_right</a>
+                    <div class="mt-4 pt-3 flex justify-between items-center" style="border-top: 1px solid rgba(255,255,255,0.06);">
+                        <span class="text-xs font-bold" style="color: #00ffa3; text-shadow: 0 0 8px rgba(0,255,163,0.4);">${sol.evaluacion.puntaje}/100 IA Score</span>
+                        <a href="detalle.html" class="material-symbols-outlined text-[#94a3b8] hover:text-[#00ffa3] transition-colors" style="transition: color 0.2s, text-shadow 0.2s;" onmouseover="this.style.textShadow='0 0 8px rgba(0,255,163,0.5)'" onmouseout="this.style.textShadow='none'">chevron_right</a>
                     </div>
                 `;
                 solicitudesContainer.appendChild(card);
