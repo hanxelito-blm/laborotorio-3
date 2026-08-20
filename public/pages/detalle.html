@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html class="h-full dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Detalle de Solicitud - ZoFranca CR</title>
+<meta name="description" content="Vista detallada de la solicitud y análisis de IA para instalación en Zona Franca CR."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../css/styles.css"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "app-bg":                 "#070d19",
+          "surface":                "#0d1b32",
+          "surface-high":           "#112240",
+          "neon-green":             "#00ffa3",
+          "electric-indigo":        "#6366F1",
+          "vibrant-cyan":           "#22D3EE",
+          "on-surface":             "#f0f4ff",
+          "on-surface-variant":     "#94a3b8",
+          "outline-variant":        "#1e3a5f",
+          "error":                  "#ff6b6b",
+          "background":             "#070d19",
+          "on-background":          "#f0f4ff",
+          "surface-container":      "#0d1b32",
+          "surface-container-low":  "#0a1628",
+          "glass-stroke":           "rgba(99,155,255,0.12)",
+          "primary":                "#00ffa3",
+          "secondary":              "#22D3EE",
+          "deep-navy":              "#001B39"
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body {
+    min-height: max(884px, 100dvh);
+    background: radial-gradient(ellipse at top right, #0a1f3d 0%, #070d19 55%),
+                radial-gradient(ellipse at bottom left, #0d1f18 0%, #070d19 60%);
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  /* Neon conic progress — score ring */
+  .circular-progress {
+    background: conic-gradient(#00ffa3 88%, rgba(255, 255, 255, 0.06) 0);
+    box-shadow: 0 0 28px rgba(0, 255, 163, 0.4), 0 0 60px rgba(0, 255, 163, 0.1);
+  }
+
+  /* Score pulse */
+  @keyframes score-pulse {
+    0%, 100% { text-shadow: 0 0 10px rgba(0,255,163,0.5); }
+    50%       { text-shadow: 0 0 24px rgba(0,255,163,0.9), 0 0 40px rgba(0,255,163,0.3); }
+  }
+  .score-text { animation: score-pulse 2.5s ease-in-out infinite; }
+
+  /* Confirm button neon green */
+  .btn-confirm {
+    background: linear-gradient(135deg, #00ffa3, #00cc80);
+    color: #003322;
+    border: 1px solid rgba(0, 255, 163, 0.4);
+    box-shadow: 0 0 18px rgba(0, 255, 163, 0.35), 0 2px 8px rgba(0,0,0,0.5);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .btn-confirm:hover {
+    box-shadow: 0 0 30px rgba(0, 255, 163, 0.65), 0 0 60px rgba(0, 255, 163, 0.2), 0 4px 16px rgba(0,0,0,0.5);
+    transform: translateY(-1px);
+  }
+  .btn-confirm:active { transform: translateY(0); }
+</style>
+</head>
+<body class="text-on-surface overflow-x-hidden pt-[64px] pb-[80px]">
+
+<!-- ── TopAppBar ── -->
+<header class="glass-panel fixed top-0 w-full z-50 border-b border-outline-variant/20 transition-colors duration-200">
+  <div class="flex justify-between items-center px-4 h-16 w-full">
+    <button onclick="window.history.back()" aria-label="Atrás"
+      class="text-neon-green transition-colors duration-200 active:opacity-80 p-2 -ml-2 rounded-full hover:bg-surface-high"
+      style="text-shadow: 0 0 8px rgba(0,255,163,0.5);">
+      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+    </button>
+    <h1 class="text-base font-bold text-on-surface truncate mx-4 flex-1 text-center tracking-tight">
+      Detalle de Solicitud
+    </h1>
+    <div class="w-10"></div>
+  </div>
+</header>
+
+<!-- ── Main ── -->
+<main class="max-w-5xl mx-auto px-4 py-8 space-y-6 pb-[100px] relative z-10">
+
+  <!-- ── KPI Cards Row ── -->
+  <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+    <!-- Inversión -->
+    <div class="glass-panel rounded-2xl p-5 flex flex-col justify-center items-center group hover:border-vibrant-cyan/30 transition-all duration-300">
+      <span class="material-symbols-outlined text-vibrant-cyan text-4xl mb-2 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+            style="font-variation-settings: 'FILL' 1;">monetization_on</span>
+      <p class="text-[10px] text-neon-green uppercase tracking-widest font-bold mb-1">Inversión</p>
+      <p class="text-xl font-semibold text-on-surface">$15.5M USD</p>
+    </div>
+
+    <!-- Empleo -->
+    <div class="glass-panel rounded-2xl p-5 flex flex-col justify-center items-center group hover:border-vibrant-cyan/30 transition-all duration-300">
+      <span class="material-symbols-outlined text-vibrant-cyan text-4xl mb-2 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+            style="font-variation-settings: 'FILL' 1;">group</span>
+      <p class="text-[10px] text-neon-green uppercase tracking-widest font-bold mb-1">Empleo</p>
+      <p class="text-xl font-semibold text-on-surface">450 Plazas</p>
+    </div>
+
+    <!-- Sector -->
+    <div class="glass-panel rounded-2xl p-5 flex flex-col justify-center items-center group hover:border-vibrant-cyan/30 transition-all duration-300">
+      <span class="material-symbols-outlined text-vibrant-cyan text-4xl mb-2 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+            style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
+      <p class="text-[10px] text-neon-green uppercase tracking-widest font-bold mb-1">Sector</p>
+      <p class="text-xl font-semibold text-on-surface text-center">Manufactura Avanzada</p>
+    </div>
+
+  </section>
+
+  <!-- ── AI Analysis Panel ── -->
+  <section class="glass-panel rounded-2xl p-6 md:p-8 relative overflow-hidden">
+    <!-- Decorative glow blobs -->
+    <div class="absolute -right-20 -top-20 w-72 h-72 rounded-full blur-3xl pointer-events-none"
+         style="background: radial-gradient(circle, rgba(99,102,241,0.12), transparent 70%);"></div>
+    <div class="absolute -left-10 -bottom-10 w-48 h-48 rounded-full blur-2xl pointer-events-none"
+         style="background: radial-gradient(circle, rgba(0,255,163,0.06), transparent 70%);"></div>
+
+    <!-- Section Title -->
+    <div class="flex items-center gap-3 mb-8 relative z-10">
+      <span class="material-symbols-outlined text-vibrant-cyan drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]"
+            style="font-variation-settings: 'FILL' 1; font-size: 28px;">smart_toy</span>
+      <div>
+        <h2 class="text-xl font-bold text-on-surface tracking-tight">Análisis de Inteligencia Artificial</h2>
+        <p class="text-xs text-on-surface-variant mt-0.5">Evaluación automatizada · Motor v2.4</p>
+      </div>
+    </div>
+
+    <div class="flex flex-col md:flex-row items-center gap-8 relative z-10">
+      <!-- Score Ring -->
+      <div class="relative w-44 h-44 rounded-full circular-progress flex items-center justify-center flex-shrink-0">
+        <div class="absolute inset-[5px] rounded-full flex flex-col items-center justify-center"
+             style="background: #070d19; box-shadow: inset 0 0 24px rgba(0,0,0,0.6);">
+          <span class="text-4xl font-bold text-neon-green score-text">88</span>
+          <span class="text-xs text-on-surface-variant">/100</span>
+          <span class="text-[9px] uppercase tracking-widest text-on-surface-variant mt-1">IA Score</span>
+        </div>
+      </div>
+
+      <!-- Justification Box -->
+      <div class="flex-1 rounded-xl p-5 border"
+           style="background: rgba(255,255,255,0.03); border-color: rgba(99,155,255,0.1); backdrop-filter: blur(8px);">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="material-symbols-outlined text-vibrant-cyan text-sm">info</span>
+          <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Justificación de IA</h3>
+        </div>
+        <p class="text-sm text-on-surface-variant leading-relaxed">
+          La empresa presenta una alta afinidad con los objetivos de desarrollo nacional. El riesgo financiero calculado es bajo, con indicadores de inversión y empleo que superan los umbrales requeridos en un <strong class="text-neon-green">+23%</strong>.
+        </p>
+
+        <!-- Confidence Indicators -->
+        <div class="grid grid-cols-2 gap-3 mt-5">
+          <div>
+            <div class="flex justify-between mb-1">
+              <span class="text-[10px] uppercase tracking-wider text-on-surface-variant">Viabilidad Financiera</span>
+              <span class="text-[10px] font-bold text-neon-green">92%</span>
+            </div>
+            <div class="h-1.5 rounded-full overflow-hidden" style="background: rgba(255,255,255,0.06);">
+              <div class="h-full rounded-full" style="width: 92%; background: linear-gradient(90deg, #00ffa3, #22d3ee); box-shadow: 0 0 6px rgba(0,255,163,0.4);"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1">
+              <span class="text-[10px] uppercase tracking-wider text-on-surface-variant">Impacto en Empleo</span>
+              <span class="text-[10px] font-bold text-vibrant-cyan">85%</span>
+            </div>
+            <div class="h-1.5 rounded-full overflow-hidden" style="background: rgba(255,255,255,0.06);">
+              <div class="h-full rounded-full" style="width: 85%; background: linear-gradient(90deg, #22d3ee, #6366f1); box-shadow: 0 0 6px rgba(34,211,238,0.4);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── Sticky CTA Bar ── -->
+<div class="fixed bottom-0 w-full glass-panel p-4 z-50 border-t border-outline-variant/20"
+     style="box-shadow: 0 -10px 40px rgba(0,0,0,0.5), 0 -1px 0 rgba(0,255,163,0.06);">
+  <div class="max-w-5xl mx-auto flex flex-col md:flex-row-reverse gap-3 justify-start">
+    <!-- PRIMARY — Neon Green Confirm -->
+    <button class="btn-confirm h-12 px-7 rounded-full flex items-center justify-center gap-2 w-full md:w-auto">
+      <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+      Confirmar Aprobación
+    </button>
+    <!-- SECONDARY — Ghost -->
+    <button class="btn-ghost h-12 px-7 rounded-full w-full md:w-auto">
+      Solicitar Revisión
+    </button>
+  </div>
+</div>
+
+</body>
+</html>

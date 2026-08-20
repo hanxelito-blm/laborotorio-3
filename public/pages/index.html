@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZoFranca CR — PROCOMER</title>
+  <meta name="description" content="Sistema institucional de solicitudes e ingreso al régimen de Zona Franca de Costa Rica — PROCOMER." />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            /* ── Deep Dark Surfaces ── */
+            'app':      '#020817',
+            'surface':  '#0f172a',   /* slate-900 */
+            'card':     '#1e293b',   /* slate-800 */
+            'border':   '#334155',   /* slate-700 */
+            'muted':    '#475569',   /* slate-600 */
+            /* ── Neon Accents ── */
+            'neon':     '#10b981',   /* emerald-500 */
+            'neon-lit': '#34d399',   /* emerald-400 */
+            'neon-dim': '#059669',   /* emerald-600 */
+            'cyan':     '#22d3ee',   /* cyan-400 */
+            'indigo':   '#818cf8',   /* indigo-400 */
+            /* ── Text ── */
+            'hi':       '#f8fafc',   /* slate-50 */
+            'mid':      '#94a3b8',   /* slate-400 */
+            'lo':       '#475569',   /* slate-600 */
+          },
+          boxShadow: {
+            'neon-sm':  '0 0 10px rgba(16,185,129,0.25)',
+            'neon-md':  '0 0 20px rgba(16,185,129,0.35)',
+            'neon-lg':  '0 0 40px rgba(16,185,129,0.3), 0 0 80px rgba(16,185,129,0.1)',
+            'cyan-sm':  '0 0 12px rgba(34,211,238,0.25)',
+            'card':     '0 4px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04) inset',
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4,0,0.6,1) infinite',
+            'fade-in':    'fadeIn 0.4s ease-out both',
+            'slide-up':   'slideUp 0.45s cubic-bezier(0.34,1.56,0.64,1) both',
+            'slide-right':'slideRight 0.35s ease-out both',
+            'glow':       'glow 2s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeIn:    { from:{ opacity:0 }, to:{ opacity:1 } },
+            slideUp:   { from:{ opacity:0, transform:'translateY(24px)' }, to:{ opacity:1, transform:'translateY(0)' } },
+            slideRight:{ from:{ opacity:0, transform:'translateX(-20px)' }, to:{ opacity:1, transform:'translateX(0)' } },
+            glow:      { '0%,100%':{ 'box-shadow':'0 0 12px rgba(16,185,129,0.25)' }, '50%':{ 'box-shadow':'0 0 28px rgba(16,185,129,0.55)' } },
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ── Global Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: #020817;
+      color: #f8fafc;
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #020817; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+
+    /* ── Glass Card ── */
+    .glass {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(51, 65, 85, 0.6);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03) inset;
+    }
+    .glass:hover { border-color: rgba(16,185,129,0.2); }
+
+    /* ── Input Dark ── */
+    .input-dark {
+      background: #020817;
+      border: 1px solid #334155;
+      color: #f8fafc;
+      border-radius: 0.5rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .input-dark:focus {
+      outline: none;
+      border-color: #10b981;
+      box-shadow: 0 0 0 3px rgba(16,185,129,0.12), 0 0 12px rgba(16,185,129,0.08);
+    }
+    .input-dark::placeholder { color: #475569; }
+    .input-dark option { background: #0f172a; }
+
+    /* ── Neon Button ── */
+    .btn-neon {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #022c22;
+      font-weight: 700;
+      font-size: 0.8125rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 1px solid rgba(16,185,129,0.4);
+      border-radius: 0.625rem;
+      padding: 0 1.75rem;
+      height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 0 16px rgba(16,185,129,0.3), 0 2px 8px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-neon::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .btn-neon:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 28px rgba(16,185,129,0.55), 0 0 56px rgba(16,185,129,0.18), 0 4px 16px rgba(0,0,0,0.5);
+    }
+    .btn-neon:hover::after { opacity: 1; }
+    .btn-neon:active { transform: translateY(0); }
+    .btn-neon:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* ── Ghost Button ── */
+    .btn-ghost {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #94a3b8;
+      font-weight: 600;
+      font-size: 0.8125rem;
+      letter-spacing: 0.04em;
+      border-radius: 0.5rem;
+      padding: 0 1.25rem;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.08); color: #f8fafc; border-color: rgba(255,255,255,0.2); }
+
+    /* ── SideNav ── */
+    .sidenav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: #94a3b8;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .sidenav-item:hover { background: rgba(255,255,255,0.05); color: #f8fafc; }
+    .sidenav-item.active {
+      background: rgba(16,185,129,0.12);
+      color: #10b981;
+      box-shadow: inset 3px 0 0 #10b981;
+    }
+    .sidenav-item.active span.material-symbols-outlined {
+      filter: drop-shadow(0 0 6px rgba(16,185,129,0.5));
+    }
+
+    /* ── Table ── */
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #475569;
+      background: rgba(255,255,255,0.02);
+      border-bottom: 1px solid #1e293b;
+    }
+    tbody td {
+      padding: 13px 14px;
+      font-size: 0.8125rem;
+      color: #94a3b8;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    tbody tr:hover td { background: rgba(16,185,129,0.03); color: #f8fafc; }
+    tbody td:first-child { color: #f8fafc; font-weight: 600; }
+
+    /* ── Status Badges ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 1px solid transparent;
+    }
+    .badge-green  { background: rgba(16,185,129,0.12); color: #10b981; border-color: rgba(16,185,129,0.25); }
+    .badge-amber  { background: rgba(245,158,11,0.12); color: #f59e0b; border-color: rgba(245,158,11,0.25); }
+    .badge-red    { background: rgba(239,68,68,0.12);  color: #f87171; border-color: rgba(239,68,68,0.25); }
+
+    /* ── Drag Drop ── */
+    .dropzone.drag-over {
+      border-color: #10b981;
+      background: rgba(16,185,129,0.06);
+      box-shadow: 0 0 20px rgba(16,185,129,0.15);
+    }
+
+    /* ── Spinner ── */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin { animation: spin 0.8s linear infinite; }
+
+    /* ── AI Score Ring ── */
+    .score-ring {
+      position: relative;
+      width: 80px; height: 80px;
+    }
+    .score-ring svg { transform: rotate(-90deg); }
+    .score-ring .ring-track { stroke: rgba(255,255,255,0.06); }
+    .score-ring .ring-fill  { stroke: #10b981; stroke-linecap: round; transition: stroke-dashoffset 1.2s cubic-bezier(0.34,1.56,0.64,1); filter: drop-shadow(0 0 6px rgba(16,185,129,0.6)); }
+
+    /* ── AI Loading Overlay ── */
+    #aiOverlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(2,8,23,0.95);
+      backdrop-filter: blur(12px);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 20px;
+    }
+    /* CRÍTICO: Permite que Tailwind .hidden oculte el overlay correctamente */
+    #aiOverlay.hidden { display: none !important; }
+    #aiOverlay .ai-ring {
+      width: 80px; height: 80px;
+      border: 3px solid rgba(16,185,129,0.15);
+      border-top-color: #10b981;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      box-shadow: 0 0 24px rgba(16,185,129,0.3);
+    }
+
+    /* ── View transitions ── */
+    #viewForm   { animation: fadeIn 0.4s ease both; }
+    #viewDash   { animation: fadeIn 0.45s ease both; }
+
+    /* ── Progress bar ── */
+    .progress-bar {
+      height: 4px; border-radius: 2px; overflow: hidden;
+      background: rgba(255,255,255,0.06);
+    }
+    .progress-fill {
+      height: 100%; border-radius: 2px;
+      background: linear-gradient(90deg, #10b981, #22d3ee);
+      box-shadow: 0 0 8px rgba(16,185,129,0.4);
+      transition: width 0.8s ease;
+    }
+
+    /* ── KPI card accent ── */
+    .kpi-accent::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      border-radius: 12px 12px 0 0;
+    }
+    .kpi-green::before  { background: linear-gradient(90deg, #10b981, #22d3ee); box-shadow: 0 0 12px rgba(16,185,129,0.4); }
+    .kpi-amber::before  { background: linear-gradient(90deg, #f59e0b, #fbbf24); box-shadow: 0 0 12px rgba(245,158,11,0.3); }
+    .kpi-red::before    { background: linear-gradient(90deg, #ef4444, #f87171); box-shadow: 0 0 12px rgba(239,68,68,0.3); }
+    .kpi-indigo::before { background: linear-gradient(90deg, #818cf8, #a78bfa); box-shadow: 0 0 12px rgba(129,140,248,0.3); }
+
+    /* ── Sidebar mobile overlay ── */
+    #sideOverlay { display: none; }
+    #sideOverlay.open {
+      display: block;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 39;
+    }
+    @media (max-width: 1023px) {
+      #sidebar { transform: translateX(-100%); transition: transform 0.3s ease; }
+      #sidebar.open { transform: translateX(0); }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- AI PROCESSING OVERLAY                              -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div id="aiOverlay" class="hidden">
+  <div class="ai-ring"></div>
+  <div class="text-center space-y-2">
+    <p class="text-hi font-bold text-lg tracking-tight">Motor de IA en proceso…</p>
+    <p id="aiStatus" class="text-mid text-sm">Evaluando perfil de inversión</p>
+  </div>
+  <div class="w-64 progress-bar">
+    <div class="progress-fill" id="aiProgress" style="width:0%"></div>
+  </div>
+  <p class="text-lo text-xs">ZoFranca CR · PROCOMER</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- LAYOUT WRAPPER (Sidebar + Main)                    -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="flex h-dvh overflow-hidden">
+
+  <!-- ── SideNavBar (fixed) ── -->
+  <aside id="sidebar"
+         class="fixed lg:relative z-40 flex flex-col w-64 shrink-0 h-full bg-surface border-r border-slate-800/60 overflow-hidden select-none transition-transform duration-300 ease-in-out">
+
+    <!-- Brand -->
+    <div class="flex items-center gap-3 px-5 py-5 border-b border-slate-800/60 shrink-0">
+      <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+           style="background: linear-gradient(135deg,#10b981,#059669); box-shadow: 0 0 16px rgba(16,185,129,0.35);">
+        <span class="material-symbols-outlined text-[18px] text-white" style="font-variation-settings:'FILL' 1;">domain</span>
+      </div>
+      <div>
+        <p class="text-hi font-bold text-sm leading-tight">ZoFranca CR</p>
+        <p class="text-lo text-[10px] uppercase tracking-wider">PROCOMER</p>
+      </div>
+    </div>
+
+    <!-- Nav Links -->
+    <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+      <p class="text-lo text-[9px] uppercase tracking-widest px-3 pt-2 pb-1">Principal</p>
+
+      <div class="sidenav-item" id="nav-form" onclick="showView('form')">
+        <span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1;">edit_document</span>
+        Nueva Solicitud
+      </div>
+      <div class="sidenav-item active" id="nav-dash" onclick="showView('dash')">
+        <span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1;">dashboard</span>
+        Dashboard Analista
+      </div>
+      <div class="sidenav-item" onclick="window.location.href='monitoreo.html'">
+        <span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1;">monitor_heart</span>
+        Monitoreo
+      </div>
+
+      <p class="text-lo text-[9px] uppercase tracking-widest px-3 pt-5 pb-1">Gestión</p>
+      <div class="sidenav-item">
+        <span class="material-symbols-outlined text-[20px]">analytics</span>
+        Reportes
+        <span class="ml-auto bg-indigo/20 text-indigo text-[10px] font-bold px-2 py-0.5 rounded-full border border-indigo/20">Beta</span>
+      </div>
+      <div class="sidenav-item">
+        <span class="material-symbols-outlined text-[20px]">settings</span>
+        Configuración
+      </div>
+    </nav>
+
+    <!-- User Footer -->
+    <div class="px-3 py-3 border-t border-slate-800/60 shrink-0">
+      <div class="sidenav-item">
+        <div class="w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold text-hi shrink-0"
+             style="background: linear-gradient(135deg,#6366f1,#818cf8);">AJ</div>
+        <div class="min-w-0">
+          <p class="text-hi text-xs font-semibold truncate">Analista Junior</p>
+          <p class="text-lo text-[10px] truncate">PROCOMER</p>
+        </div>
+        <span class="material-symbols-outlined text-[18px] text-lo ml-auto">logout</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Mobile overlay -->
+  <div id="sideOverlay" onclick="closeSidebar()"></div>
+
+  <!-- ── Right Content Area ── -->
+  <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+
+    <!-- TopBar -->
+    <header class="shrink-0 flex items-center gap-3 px-4 lg:px-6 h-16 border-b border-slate-800/60"
+            style="background: rgba(15,23,42,0.85); backdrop-filter: blur(12px);">
+      <!-- Hamburger (mobile) -->
+      <button onclick="toggleSidebar()" class="lg:hidden btn-ghost !px-2 !h-9 text-mid">
+        <span class="material-symbols-outlined text-[22px]">menu</span>
+      </button>
+
+      <!-- Breadcrumb / Title -->
+      <div class="flex-1 min-w-0">
+        <h1 id="topbarTitle" class="text-hi font-bold text-base truncate">Dashboard del Analista</h1>
+        <p id="topbarSub" class="text-lo text-[11px] hidden sm:block">ZoFranca CR · Solicitudes activas</p>
+      </div>
+
+      <!-- Right Actions -->
+      <div class="flex items-center gap-2">
+        <!-- Search pill -->
+        <div id="topSearchWrap" class="hidden md:flex items-center gap-2 bg-app border border-slate-800 rounded-lg px-3 h-9">
+          <span class="material-symbols-outlined text-lo text-[18px]">search</span>
+          <input id="topSearch" type="text" placeholder="Buscar solicitud…" class="bg-transparent text-hi text-sm outline-none placeholder:text-lo w-40" oninput="filterTable()" />
+        </div>
+        <!-- Notification -->
+        <button class="btn-ghost !px-2 !h-9 relative">
+          <span class="material-symbols-outlined text-[22px]" style="font-variation-settings:'FILL' 1;">notifications</span>
+          <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-red-500 border border-surface animate-pulse-slow"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ═══════════════════════ SCROLLABLE CONTENT ════════════════════════ -->
+    <main class="flex-1 overflow-y-auto">
+
+      <!-- ╔══════════════════════════════════════════════╗ -->
+      <!-- ║  VISTA 1: FORMULARIO DE INGRESO             ║ -->
+      <!-- ╚══════════════════════════════════════════════╝ -->
+      <section id="viewForm" class="hidden p-4 md:p-6 max-w-5xl mx-auto space-y-6">
+
+        <!-- Page Header -->
+        <div class="animate-slide-up">
+          <div class="flex items-center gap-3 mb-1">
+            <div class="w-1 h-8 rounded-full bg-neon shadow-neon-sm"></div>
+            <h2 class="text-2xl font-bold text-hi tracking-tight">Nueva Solicitud de Instalación</h2>
+          </div>
+          <p class="text-mid text-sm ml-4">Complete el formulario para iniciar el proceso de evaluación mediante IA.</p>
+        </div>
+
+        <!-- Alert Banner -->
+        <div id="formAlert" class="hidden animate-slide-up rounded-xl p-4 text-sm font-semibold"></div>
+
+        <!-- ── Bento Grid ── -->
+        <form id="formSolicitud" class="space-y-4" autocomplete="off">
+
+          <!-- Row 1: Empresa + Sector -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 animate-slide-up" style="animation-delay:0.05s">
+
+            <!-- Card: Datos Empresa -->
+            <div class="glass rounded-2xl p-5 space-y-4">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="material-symbols-outlined text-neon text-[20px]" style="font-variation-settings:'FILL' 1;">business</span>
+                <h3 class="text-hi font-semibold text-sm uppercase tracking-wider">Datos de la Empresa</h3>
+              </div>
+              <div>
+                <label class="block text-lo text-[10px] font-bold uppercase tracking-widest mb-1.5" for="f_empresa">Nombre Legal</label>
+                <input id="f_empresa" type="text" placeholder="Ej. TechCorp Ltda." required
+                  class="input-dark w-full h-11 px-4 text-sm" />
+              </div>
+              <div>
+                <label class="block text-lo text-[10px] font-bold uppercase tracking-widest mb-1.5" for="f_sector">Sector Industrial</label>
+                <div class="relative">
+                  <select id="f_sector" required class="input-dark w-full h-11 px-4 text-sm appearance-none pr-10">
+                    <option value="" disabled selected>Seleccione un sector</option>
+                    <option value="Tecnología">Tecnología e Innovación</option>
+                    <option value="Ciencias">Ciencias de la Vida</option>
+                    <option value="Manufactura">Manufactura Avanzada</option>
+                    <option value="Servicios">Servicios Corporativos</option>
+                  </select>
+                  <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-lo pointer-events-none text-[18px]">expand_more</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card: Proyecciones -->
+            <div class="glass rounded-2xl p-5 space-y-4">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="material-symbols-outlined text-cyan text-[20px]" style="font-variation-settings:'FILL' 1;">trending_up</span>
+                <h3 class="text-hi font-semibold text-sm uppercase tracking-wider">Proyecciones</h3>
+              </div>
+              <div>
+                <label class="block text-lo text-[10px] font-bold uppercase tracking-widest mb-1.5" for="f_inversion">Inversión Proyectada (USD)</label>
+                <div class="relative">
+                  <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-lo text-[18px]">attach_money</span>
+                  <input id="f_inversion" type="number" min="0" placeholder="150,000" required
+                    class="input-dark w-full h-11 pl-10 pr-4 text-sm" />
+                </div>
+              </div>
+              <div>
+                <label class="block text-lo text-[10px] font-bold uppercase tracking-widest mb-1.5" for="f_empleos">Empleos Proyectados</label>
+                <div class="relative">
+                  <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-lo text-[18px]">group</span>
+                  <input id="f_empleos" type="number" min="0" placeholder="50" required
+                    class="input-dark w-full h-11 pl-10 pr-4 text-sm" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 2: Drop Zone (full width) -->
+          <div class="glass rounded-2xl p-5 animate-slide-up" style="animation-delay:0.1s">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="material-symbols-outlined text-indigo text-[20px]" style="font-variation-settings:'FILL' 1;">folder_open</span>
+              <h3 class="text-hi font-semibold text-sm uppercase tracking-wider">Documentos de Respaldo</h3>
+              <span class="ml-auto text-lo text-[10px]">PDF, DOCX · Máx 10MB</span>
+            </div>
+
+            <div id="dropZone"
+              class="dropzone border border-dashed border-slate-700 rounded-xl p-8 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 hover:border-neon/50 hover:bg-neon/[0.03] group"
+              onclick="document.getElementById('fileInput').click()">
+              <span class="material-symbols-outlined text-4xl text-neon mb-3 transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-110"
+                    style="filter: drop-shadow(0 0 8px rgba(16,185,129,0.4));">cloud_upload</span>
+              <p class="text-hi text-sm font-medium">Arrastra y suelta aquí</p>
+              <p class="text-mid text-xs mt-1">o haz clic para explorar archivos</p>
+              <input id="fileInput" type="file" accept=".pdf,.doc,.docx" multiple class="hidden" />
+            </div>
+
+            <div id="fileList" class="space-y-2 mt-3 empty:hidden"></div>
+          </div>
+
+          <!-- Row 3: Info + Submit -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 animate-slide-up" style="animation-delay:0.15s">
+
+            <!-- Info: Mínimos requeridos -->
+            <div class="glass rounded-2xl p-5 md:col-span-2">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="material-symbols-outlined text-amber-400 text-[18px]" style="font-variation-settings:'FILL' 1;">info</span>
+                <h3 class="text-hi text-xs font-semibold uppercase tracking-wider">Requisitos Mínimos</h3>
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div class="rounded-xl p-3" style="background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.15);">
+                  <p class="text-[10px] text-amber-400 uppercase tracking-widest font-bold mb-1">Inversión mínima</p>
+                  <p class="text-hi font-bold text-base">$150,000</p>
+                  <p class="text-lo text-[10px] mt-0.5">USD proyectados</p>
+                </div>
+                <div class="rounded-xl p-3" style="background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.15);">
+                  <p class="text-[10px] text-neon uppercase tracking-widest font-bold mb-1">Empleos mínimos</p>
+                  <p class="text-hi font-bold text-base">10 plazas</p>
+                  <p class="text-lo text-[10px] mt-0.5">empleos directos</p>
+                </div>
+              </div>
+              <p class="text-lo text-[11px] mt-3 leading-relaxed">La evaluación de IA analiza automáticamente el perfil de inversión, impacto en empleo y compatibilidad sectorial con los objetivos del régimen.</p>
+            </div>
+
+            <!-- Submit card -->
+            <div class="glass rounded-2xl p-5 flex flex-col items-center justify-center gap-4 text-center">
+              <div class="w-14 h-14 rounded-full flex items-center justify-center" style="background: rgba(16,185,129,0.1); box-shadow: 0 0 20px rgba(16,185,129,0.2);">
+                <span class="material-symbols-outlined text-neon text-3xl" style="font-variation-settings:'FILL' 1; filter: drop-shadow(0 0 6px rgba(16,185,129,0.5));">smart_toy</span>
+              </div>
+              <div>
+                <p class="text-hi text-xs font-semibold">Motor de IA v2.4</p>
+                <p class="text-lo text-[10px] mt-0.5">Evaluación en ~2 seg</p>
+              </div>
+              <button type="submit" id="submitBtn" class="btn-neon w-full">
+                <span id="submitText">Enviar e Ingresar</span>
+                <span class="material-symbols-outlined text-[18px] hidden spin" id="submitSpinner">progress_activity</span>
+              </button>
+              <p class="text-lo text-[10px]">Evaluación automática certificada</p>
+            </div>
+          </div>
+
+        </form>
+      </section>
+
+      <!-- ╔══════════════════════════════════════════════╗ -->
+      <!-- ║  VISTA 2: DASHBOARD DEL ANALISTA            ║ -->
+      <!-- ╚══════════════════════════════════════════════╝ -->
+      <section id="viewDash" class="hidden p-4 md:p-6 space-y-6">
+
+        <!-- Page Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-slide-up">
+          <div>
+            <div class="flex items-center gap-3 mb-1">
+              <div class="w-1 h-8 rounded-full bg-neon shadow-neon-sm"></div>
+              <h2 class="text-2xl font-bold text-hi tracking-tight">Dashboard del Analista</h2>
+            </div>
+            <p class="text-mid text-sm ml-4">Gestión y evaluación de solicitudes de régimen de Zona Franca.</p>
+          </div>
+          <button onclick="showView('form')" class="btn-neon shrink-0">
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings:'FILL' 1;">add_circle</span>
+            Nueva Solicitud
+          </button>
+        </div>
+
+        <!-- Toast de éxito (aparece tras envío) -->
+        <div id="successToast" class="hidden animate-slide-up rounded-2xl p-4 flex items-start gap-4 border border-neon/20"
+             style="background: rgba(16,185,129,0.08);">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+               style="background: rgba(16,185,129,0.15); box-shadow: 0 0 14px rgba(16,185,129,0.3);">
+            <span class="material-symbols-outlined text-neon text-xl" style="font-variation-settings:'FILL' 1;">check_circle</span>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-hi font-bold text-sm" id="toastTitle">Solicitud procesada</p>
+            <p class="text-mid text-xs mt-0.5" id="toastBody">—</p>
+          </div>
+          <button onclick="document.getElementById('successToast').classList.add('hidden')" class="text-lo hover:text-hi">
+            <span class="material-symbols-outlined text-[18px]">close</span>
+          </button>
+        </div>
+
+        <!-- ── KPI Cards ── -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 animate-slide-up" style="animation-delay:0.05s">
+
+          <div class="glass rounded-2xl p-5 relative overflow-hidden kpi-accent kpi-green">
+            <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full pointer-events-none"
+                 style="background: radial-gradient(circle, rgba(16,185,129,0.07), transparent 70%);"></div>
+            <div class="flex items-center gap-2 mb-3">
+              <span class="material-symbols-outlined text-neon text-[20px]" style="font-variation-settings:'FILL' 1;">task_alt</span>
+              <p class="text-[10px] text-lo uppercase tracking-widest font-bold">Recomendadas</p>
+            </div>
+            <p class="text-3xl font-bold text-hi" id="kpiRec">—</p>
+            <div class="progress-bar mt-3"><div class="progress-fill" id="kpiRecBar" style="width:0%"></div></div>
+          </div>
+
+          <div class="glass rounded-2xl p-5 relative overflow-hidden kpi-accent kpi-amber">
+            <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full pointer-events-none"
+                 style="background: radial-gradient(circle, rgba(245,158,11,0.07), transparent 70%);"></div>
+            <div class="flex items-center gap-2 mb-3">
+              <span class="material-symbols-outlined text-amber-400 text-[20px]" style="font-variation-settings:'FILL' 1;">pending_actions</span>
+              <p class="text-[10px] text-lo uppercase tracking-widest font-bold">En Revisión</p>
+            </div>
+            <p class="text-3xl font-bold text-hi" id="kpiRev">—</p>
+            <div class="progress-bar mt-3"><div class="progress-fill" id="kpiRevBar" style="background: linear-gradient(90deg,#f59e0b,#fbbf24); width:0%"></div></div>
+          </div>
+
+          <div class="glass rounded-2xl p-5 relative overflow-hidden kpi-accent kpi-red">
+            <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full pointer-events-none"
+                 style="background: radial-gradient(circle, rgba(239,68,68,0.07), transparent 70%);"></div>
+            <div class="flex items-center gap-2 mb-3">
+              <span class="material-symbols-outlined text-red-400 text-[20px]" style="font-variation-settings:'FILL' 1;">cancel</span>
+              <p class="text-[10px] text-lo uppercase tracking-widest font-bold">Rechazadas</p>
+            </div>
+            <p class="text-3xl font-bold text-hi" id="kpiRej">—</p>
+            <div class="progress-bar mt-3"><div class="progress-fill" id="kpiRejBar" style="background: linear-gradient(90deg,#ef4444,#f87171); width:0%"></div></div>
+          </div>
+
+          <div class="glass rounded-2xl p-5 relative overflow-hidden kpi-accent kpi-indigo">
+            <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full pointer-events-none"
+                 style="background: radial-gradient(circle, rgba(129,140,248,0.07), transparent 70%);"></div>
+            <div class="flex items-center gap-2 mb-3">
+              <span class="material-symbols-outlined text-indigo text-[20px]" style="font-variation-settings:'FILL' 1;">list_alt</span>
+              <p class="text-[10px] text-lo uppercase tracking-widest font-bold">Total Solicitudes</p>
+            </div>
+            <p class="text-3xl font-bold text-hi" id="kpiTotal">—</p>
+            <p class="text-[10px] text-lo mt-2 font-medium">Histórico completo</p>
+          </div>
+
+        </div>
+
+        <!-- ── Filters + Table ── -->
+        <div class="glass rounded-2xl overflow-hidden animate-slide-up" style="animation-delay:0.1s">
+
+          <!-- Filter Bar -->
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-4 border-b border-slate-800/60">
+            <div class="flex-1 flex items-center gap-2 input-dark rounded-lg px-3 h-9 min-w-0">
+              <span class="material-symbols-outlined text-lo text-[18px] shrink-0">search</span>
+              <input id="filterSearch" type="text" placeholder="Buscar por empresa…" class="bg-transparent text-hi text-sm outline-none placeholder:text-lo w-full" oninput="filterTable()" />
+            </div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <select id="filterStatus" class="input-dark h-9 px-3 text-sm pr-8 appearance-none rounded-lg" onchange="filterTable()" style="background-image:none;">
+                <option value="">Todos los estados</option>
+                <option value="Recomendada">Recomendada</option>
+                <option value="Revisar">En Revisión</option>
+                <option value="Rechazada">Rechazada</option>
+              </select>
+              <select id="filterSector" class="input-dark h-9 px-3 text-sm pr-8 appearance-none rounded-lg" onchange="filterTable()" style="background-image:none;">
+                <option value="">Todos los sectores</option>
+                <option value="Tecnología">Tecnología</option>
+                <option value="Ciencias">Ciencias de la Vida</option>
+                <option value="Manufactura">Manufactura</option>
+                <option value="Servicios">Servicios</option>
+              </select>
+              <button onclick="resetFilters()" class="btn-ghost !h-9 !text-xs">
+                <span class="material-symbols-outlined text-[16px]">filter_alt_off</span>
+                Limpiar
+              </button>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="overflow-x-auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>Empresa</th>
+                  <th class="hidden sm:table-cell">Sector</th>
+                  <th class="hidden md:table-cell">Inversión (USD)</th>
+                  <th class="hidden lg:table-cell">Empleos</th>
+                  <th>Estado</th>
+                  <th>IA Score</th>
+                  <th class="hidden sm:table-cell">Fecha</th>
+                  <th class="text-right">Acción</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody">
+                <!-- JS populated -->
+              </tbody>
+            </table>
+
+            <!-- Empty State -->
+            <div id="tableEmpty" class="hidden py-16 flex flex-col items-center justify-center text-center">
+              <span class="material-symbols-outlined text-5xl text-lo mb-3">inbox</span>
+              <p class="text-hi font-semibold text-sm">Sin resultados</p>
+              <p class="text-lo text-xs mt-1">Ajusta los filtros o crea una nueva solicitud</p>
+            </div>
+
+            <!-- Loader -->
+            <div id="tableLoader" class="py-12 flex flex-col items-center justify-center gap-3">
+              <span class="material-symbols-outlined text-3xl text-neon spin">progress_activity</span>
+              <p class="text-mid text-sm">Cargando solicitudes…</p>
+            </div>
+          </div>
+
+          <!-- Table Footer -->
+          <div class="flex items-center justify-between px-4 py-3 border-t border-slate-800/60">
+            <p id="tableCount" class="text-lo text-xs">— solicitudes</p>
+            <div class="flex gap-1">
+              <button class="btn-ghost !h-7 !px-2 !text-xs" disabled id="btnPrev" onclick="changePage(-1)">
+                <span class="material-symbols-outlined text-[16px]">chevron_left</span>
+              </button>
+              <span id="pageInfo" class="btn-ghost !h-7 !px-3 !text-xs !cursor-default">1 / 1</span>
+              <button class="btn-ghost !h-7 !px-2 !text-xs" id="btnNext" onclick="changePage(1)">
+                <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+  </div><!-- end right area -->
+</div><!-- end flex layout -->
+
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- JAVASCRIPT                                         -->
+<!-- ═══════════════════════════════════════════════════ -->
+<script>
+/* ─────────────────────────────────────────────────────
+   STATE
+───────────────────────────────────────────────────── */
+let allSolicitudes = [];
+let filteredSolicitudes = [];
+let currentPage = 1;
+const PAGE_SIZE = 8;
+let selectedFiles = [];
+
+/* ─────────────────────────────────────────────────────
+   VIEW SWITCHING
+───────────────────────────────────────────────────── */
+function showView(view) {
+  const formEl = document.getElementById('viewForm');
+  const dashEl = document.getElementById('viewDash');
+  const navForm = document.getElementById('nav-form');
+  const navDash = document.getElementById('nav-dash');
+  const topbarTitle = document.getElementById('topbarTitle');
+  const topbarSub   = document.getElementById('topbarSub');
+  const topSearchWrap = document.getElementById('topSearchWrap');
+
+  // Reset animation by force-reflow trick
+  const reset = (el) => { el.classList.add('hidden'); el.offsetHeight; el.classList.remove('hidden'); };
+
+  if (view === 'form') {
+    dashEl.classList.add('hidden');
+    formEl.classList.remove('hidden');
+    reset(formEl);
+    navForm.classList.add('active'); navDash.classList.remove('active');
+    topbarTitle.textContent = 'Nueva Solicitud';
+    topbarSub.textContent   = 'ZoFranca CR · Formulario de ingreso';
+    topSearchWrap.classList.add('hidden');
+  } else {
+    formEl.classList.add('hidden');
+    dashEl.classList.remove('hidden');
+    reset(dashEl);
+    navDash.classList.add('active'); navForm.classList.remove('active');
+    topbarTitle.textContent = 'Dashboard del Analista';
+    topbarSub.textContent   = 'ZoFranca CR · Solicitudes activas';
+    topSearchWrap.classList.remove('hidden');
+    loadSolicitudes();
+  }
+  closeSidebar();
+}
+
+/* ─────────────────────────────────────────────────────
+   SIDEBAR MOBILE
+───────────────────────────────────────────────────── */
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sideOverlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sideOverlay').classList.remove('open');
+}
+
+/* ─────────────────────────────────────────────────────
+   DRAG & DROP
+───────────────────────────────────────────────────── */
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+
+['dragenter','dragover','dragleave','drop'].forEach(ev => {
+  dropZone.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); });
+  document.body.addEventListener(ev, e => e.preventDefault());
+});
+['dragenter','dragover'].forEach(ev => dropZone.addEventListener(ev, () => dropZone.classList.add('drag-over')));
+['dragleave','drop'].forEach(ev => dropZone.addEventListener(ev, () => dropZone.classList.remove('drag-over')));
+dropZone.addEventListener('drop', e => handleFiles(e.dataTransfer.files));
+fileInput.addEventListener('change', function() { handleFiles(this.files); });
+
+function handleFiles(files) {
+  const list = document.getElementById('fileList');
+  Array.from(files).forEach(file => {
+    if (selectedFiles.find(f => f.name === file.name)) return;
+    selectedFiles.push(file);
+    const item = document.createElement('div');
+    item.className = 'flex items-center justify-between p-3 rounded-xl border border-slate-800 text-sm';
+    item.style.background = 'rgba(255,255,255,0.02)';
+    item.innerHTML = `
+      <div class="flex items-center gap-3 min-w-0">
+        <span class="material-symbols-outlined text-neon text-[20px] shrink-0">draft</span>
+        <div class="min-w-0">
+          <p class="text-hi text-xs font-medium truncate">${file.name}</p>
+          <p class="text-lo text-[10px]">${(file.size/1024/1024).toFixed(2)} MB</p>
+        </div>
+      </div>
+      <button type="button" class="text-lo hover:text-red-400 transition-colors p-1 shrink-0">
+        <span class="material-symbols-outlined text-[18px]">close</span>
+      </button>`;
+    item.querySelector('button').onclick = () => {
+      item.remove();
+      selectedFiles = selectedFiles.filter(f => f !== file);
+    };
+    list.appendChild(item);
+  });
+}
+
+/* ─────────────────────────────────────────────────────
+   FORM SUBMIT  →  AI OVERLAY  →  DASHBOARD
+───────────────────────────────────────────────────── */
+document.getElementById('formSolicitud').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const empresa  = document.getElementById('f_empresa').value.trim();
+  const sector   = document.getElementById('f_sector').value;
+  const inversion= document.getElementById('f_inversion').value;
+  const empleos  = document.getElementById('f_empleos').value;
+
+  if (selectedFiles.length === 0) {
+    showFormAlert('⚠ Debes adjuntar al menos un documento de respaldo.', 'warn');
+    return;
+  }
+
+  const submitBtn     = document.getElementById('submitBtn');
+  const submitText    = document.getElementById('submitText');
+  const submitSpinner = document.getElementById('submitSpinner');
+
+  submitBtn.disabled = true;
+  submitText.textContent = 'Procesando…';
+  submitSpinner.classList.remove('hidden');
+
+  // Safety timeout: siempre cierra el overlay en máx 8s
+  const safetyTimer = setTimeout(() => {
+    hideAIOverlay();
+    submitBtn.disabled = false;
+    submitText.textContent = 'Enviar e Ingresar';
+    submitSpinner.classList.add('hidden');
+    showFormAlert('Tiempo de espera agotado. Intenta de nuevo.', 'error');
+  }, 8000);
+
+  // Show AI overlay with progressive messages
+  showAIOverlay();
+
+  try {
+    const resp = await fetch('/api/solicitudes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        empresa, sector, inversion, empleos,
+        documentos: selectedFiles.map(f => ({ nombre: f.name, tamaño: f.size })),
+        fecha: new Date().toISOString()
+      })
+    });
+
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}: ${await resp.text()}`);
+    const result = await resp.json();
+
+    clearTimeout(safetyTimer);
+    // Wait for overlay animation to complete (2.5s)
+    await delay(2500);
+    hideAIOverlay();
+
+    // Navigate to dashboard with result toast
+    showView('dash');
+    showSuccessToast(result);
+
+    // Reset form
+    document.getElementById('formSolicitud').reset();
+    document.getElementById('fileList').innerHTML = '';
+    selectedFiles = [];
+
+  } catch (err) {
+    clearTimeout(safetyTimer);
+    console.error('[ZoFranca] Error en submit:', err);
+    hideAIOverlay();
+    // Mostrar error aunque la vista esté oculta
+    setTimeout(() => {
+      showFormAlert(`Error: ${err.message || 'No se pudo conectar con el servidor. Verifica que el servidor esté activo.'}`, 'error');
+    }, 500);
+  } finally {
+    submitBtn.disabled = false;
+    submitText.textContent = 'Enviar e Ingresar';
+    submitSpinner.classList.add('hidden');
+  }
+});
+
+/* ─────────────────────────────────────────────────────
+   AI OVERLAY
+───────────────────────────────────────────────────── */
+const aiMessages = [
+  'Evaluando perfil de inversión…',
+  'Analizando impacto en empleo…',
+  'Verificando compatibilidad sectorial…',
+  'Generando dictamen de IA…',
+  'Clasificando solicitud…',
+];
+let aiMsgTimer;
+
+function showAIOverlay() {
+  const overlay  = document.getElementById('aiOverlay');
+  const statusEl = document.getElementById('aiStatus');
+  const progressEl = document.getElementById('aiProgress');
+  overlay.classList.remove('hidden');
+
+  let step = 0;
+  const total = aiMessages.length;
+  const interval = 2500 / total;
+
+  aiMsgTimer = setInterval(() => {
+    if (step < total) {
+      statusEl.textContent = aiMessages[step];
+      progressEl.style.width = `${((step + 1) / total) * 100}%`;
+      step++;
+    } else {
+      clearInterval(aiMsgTimer);
+    }
+  }, interval);
+}
+
+function hideAIOverlay() {
+  clearInterval(aiMsgTimer);
+  const overlay = document.getElementById('aiOverlay');
+  overlay.style.opacity = '0';
+  overlay.style.transition = 'opacity 0.4s ease';
+  setTimeout(() => {
+    overlay.classList.add('hidden');
+    overlay.style.opacity = '';
+    overlay.style.transition = '';
+    document.getElementById('aiProgress').style.width = '0%';
+  }, 400);
+}
+
+/* ─────────────────────────────────────────────────────
+   ALERTS & TOASTS
+───────────────────────────────────────────────────── */
+function showFormAlert(msg, type = 'error') {
+  const el = document.getElementById('formAlert');
+  el.textContent = msg;
+  if (type === 'error') {
+    el.className = 'animate-slide-up rounded-xl p-4 text-sm font-semibold text-red-400 border border-red-500/25';
+    el.style.background = 'rgba(239,68,68,0.08)';
+  } else {
+    el.className = 'animate-slide-up rounded-xl p-4 text-sm font-semibold text-amber-400 border border-amber-500/25';
+    el.style.background = 'rgba(245,158,11,0.08)';
+  }
+  el.classList.remove('hidden');
+  setTimeout(() => el.classList.add('hidden'), 5000);
+}
+
+function showSuccessToast(result) {
+  const toast = document.getElementById('successToast');
+  const { empresa, evaluacion } = result;
+  const scoreColor = evaluacion.clasificacion === 'Recomendada' ? 'text-neon' : evaluacion.clasificacion === 'Revisar' ? 'text-amber-400' : 'text-red-400';
+  document.getElementById('toastTitle').textContent =
+    `"${empresa}" · ${evaluacion.clasificacion} (${evaluacion.puntaje}/100)`;
+  document.getElementById('toastBody').textContent =
+    `Evaluación completada por IA · ${evaluacion.clasificacion === 'Recomendada' ? 'Perfil aprobado para revisión final' : evaluacion.clasificacion === 'Revisar' ? 'Requiere análisis manual adicional' : 'No alcanza los mínimos requeridos'}`;
+  toast.classList.remove('hidden');
+  setTimeout(() => toast.classList.add('hidden'), 8000);
+}
+
+/* ─────────────────────────────────────────────────────
+   LOAD SOLICITUDES
+───────────────────────────────────────────────────── */
+async function loadSolicitudes() {
+  const loader = document.getElementById('tableLoader');
+  const body   = document.getElementById('tableBody');
+  loader.classList.remove('hidden');
+  body.innerHTML = '';
+  document.getElementById('tableEmpty').classList.add('hidden');
+
+  try {
+    const resp = await fetch('/api/solicitudes');
+    if (!resp.ok) throw new Error();
+    allSolicitudes = await resp.json();
+    allSolicitudes.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+    updateKPIs();
+    applyFilter();
+  } catch {
+    body.innerHTML = `<tr><td colspan="8" class="text-center py-8 text-red-400 text-sm">Error al cargar solicitudes. Verifica el servidor.</td></tr>`;
+  } finally {
+    loader.classList.add('hidden');
+  }
+}
+
+/* ─────────────────────────────────────────────────────
+   KPIs
+───────────────────────────────────────────────────── */
+function updateKPIs() {
+  const total = allSolicitudes.length;
+  const rec = allSolicitudes.filter(s => s.evaluacion.clasificacion === 'Recomendada').length;
+  const rev = allSolicitudes.filter(s => s.evaluacion.clasificacion === 'Revisar').length;
+  const rej = allSolicitudes.filter(s => s.evaluacion.clasificacion === 'Rechazada').length;
+
+  animateNumber('kpiTotal', total);
+  animateNumber('kpiRec', rec);
+  animateNumber('kpiRev', rev);
+  animateNumber('kpiRej', rej);
+
+  if (total > 0) {
+    setTimeout(() => {
+      document.getElementById('kpiRecBar').style.width = `${(rec/total)*100}%`;
+      document.getElementById('kpiRevBar').style.width = `${(rev/total)*100}%`;
+      document.getElementById('kpiRejBar').style.width = `${(rej/total)*100}%`;
+    }, 200);
+  }
+}
+
+function animateNumber(id, target) {
+  const el = document.getElementById(id);
+  let start = 0;
+  const step = Math.ceil(target / 20);
+  const timer = setInterval(() => {
+    start = Math.min(start + step, target);
+    el.textContent = start;
+    if (start >= target) clearInterval(timer);
+  }, 40);
+}
+
+/* ─────────────────────────────────────────────────────
+   FILTERS & TABLE
+───────────────────────────────────────────────────── */
+function filterTable() {
+  const search = (document.getElementById('filterSearch').value || document.getElementById('topSearch').value || '').toLowerCase();
+  const status = document.getElementById('filterStatus').value;
+  const sector = document.getElementById('filterSector').value;
+
+  filteredSolicitudes = allSolicitudes.filter(s => {
+    const matchSearch = !search || s.empresa.toLowerCase().includes(search) || (s.sector || '').toLowerCase().includes(search);
+    const matchStatus = !status || s.evaluacion.clasificacion === status;
+    const matchSector = !sector || s.sector === sector;
+    return matchSearch && matchStatus && matchSector;
+  });
+
+  currentPage = 1;
+  renderTable();
+}
+
+function resetFilters() {
+  document.getElementById('filterSearch').value = '';
+  document.getElementById('filterStatus').value = '';
+  document.getElementById('filterSector').value = '';
+  document.getElementById('topSearch').value = '';
+  filteredSolicitudes = [...allSolicitudes];
+  currentPage = 1;
+  renderTable();
+}
+
+function applyFilter() {
+  filteredSolicitudes = [...allSolicitudes];
+  renderTable();
+}
+
+function changePage(dir) {
+  const totalPages = Math.ceil(filteredSolicitudes.length / PAGE_SIZE);
+  currentPage = Math.max(1, Math.min(currentPage + dir, totalPages));
+  renderTable();
+}
+
+function renderTable() {
+  const body  = document.getElementById('tableBody');
+  const empty = document.getElementById('tableEmpty');
+  const count = document.getElementById('tableCount');
+  const pageInfo = document.getElementById('pageInfo');
+  const btnPrev  = document.getElementById('btnPrev');
+  const btnNext  = document.getElementById('btnNext');
+
+  body.innerHTML = '';
+
+  if (filteredSolicitudes.length === 0) {
+    empty.classList.remove('hidden');
+    count.textContent = '0 solicitudes';
+    pageInfo.textContent = '0 / 0';
+    return;
+  }
+  empty.classList.add('hidden');
+
+  const totalPages = Math.ceil(filteredSolicitudes.length / PAGE_SIZE);
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const pageData = filteredSolicitudes.slice(start, start + PAGE_SIZE);
+
+  count.textContent = `${filteredSolicitudes.length} solicitud${filteredSolicitudes.length !== 1 ? 'es' : ''}`;
+  pageInfo.textContent = `${currentPage} / ${totalPages}`;
+  btnPrev.disabled = currentPage === 1;
+  btnNext.disabled = currentPage === totalPages;
+
+  pageData.forEach((sol, idx) => {
+    const cls = sol.evaluacion.clasificacion;
+    const badgeClass = cls === 'Recomendada' ? 'badge-green' : cls === 'Revisar' ? 'badge-amber' : 'badge-red';
+    const badgeIcon  = cls === 'Recomendada' ? 'check_circle' : cls === 'Revisar' ? 'pending_actions' : 'cancel';
+    const score      = sol.evaluacion.puntaje;
+    const scoreColor = score >= 80 ? '#10b981' : score >= 50 ? '#f59e0b' : '#f87171';
+
+    const tr = document.createElement('tr');
+    tr.style.animationDelay = `${idx * 0.04}s`;
+    tr.className = 'animate-fade-in';
+    tr.innerHTML = `
+      <td>
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-hi shrink-0"
+               style="background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(34,211,238,0.1)); border: 1px solid rgba(16,185,129,0.2);">
+            ${sol.empresa.charAt(0).toUpperCase()}
+          </div>
+          <span class="truncate max-w-[140px]">${sol.empresa}</span>
+        </div>
+      </td>
+      <td class="hidden sm:table-cell">${sol.sector || '—'}</td>
+      <td class="hidden md:table-cell">$${Number(sol.inversion).toLocaleString()}</td>
+      <td class="hidden lg:table-cell">${Number(sol.empleos || 0).toLocaleString()}</td>
+      <td>
+        <span class="badge ${badgeClass}">
+          <span class="material-symbols-outlined text-[12px]" style="font-variation-settings:'FILL' 1;">${badgeIcon}</span>
+          ${cls}
+        </span>
+      </td>
+      <td>
+        <div class="flex items-center gap-2">
+          <div class="score-ring w-8 h-8">
+            <svg viewBox="0 0 32 32" width="32" height="32">
+              <circle class="ring-track" cx="16" cy="16" r="12" fill="none" stroke-width="3"/>
+              <circle class="ring-fill" cx="16" cy="16" r="12" fill="none" stroke-width="3"
+                stroke="${scoreColor}"
+                stroke-dasharray="${2 * Math.PI * 12}"
+                stroke-dashoffset="${2 * Math.PI * 12 * (1 - score / 100)}"
+                style="filter: drop-shadow(0 0 4px ${scoreColor}66);"/>
+            </svg>
+            <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:8px;font-weight:700;color:${scoreColor};">${score}</span>
+          </div>
+          <span class="text-xs font-bold" style="color: ${scoreColor};">${score}</span>
+        </div>
+      </td>
+      <td class="hidden sm:table-cell text-lo">${new Date(sol.fecha).toLocaleDateString('es-CR', { day:'2-digit', month:'short', year:'2-digit' })}</td>
+      <td class="text-right">
+        <a href="detalle.html" class="btn-ghost !h-8 !px-3 !text-xs inline-flex">
+          <span class="material-symbols-outlined text-[15px]">open_in_new</span>
+          Ver
+        </a>
+      </td>`;
+    body.appendChild(tr);
+  });
+}
+
+/* ─────────────────────────────────────────────────────
+   UTILS
+───────────────────────────────────────────────────── */
+const delay = ms => new Promise(r => setTimeout(r, ms));
+
+/* ─────────────────────────────────────────────────────
+   INIT — start on Dashboard
+───────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  showView('dash');
+});
+</script>
+</body>
+</html>

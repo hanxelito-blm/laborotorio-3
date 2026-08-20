@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard del Analista - ZoFranca CR</title>
+<meta name="description" content="Panel de gestión y revisión de solicitudes de Zona Franca de Costa Rica."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../css/styles.css"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "app-bg":                 "#070d19",
+          "surface":                "#0d1b32",
+          "surface-high":           "#112240",
+          "surface-highest":        "#162d4a",
+          "input-bg":               "#0a1628",
+          "neon-green":             "#00ffa3",
+          "neon-green-dim":         "#00cc80",
+          "electric-indigo":        "#6366F1",
+          "vibrant-cyan":           "#22D3EE",
+          "on-surface":             "#f0f4ff",
+          "on-surface-variant":     "#94a3b8",
+          "outline":                "#3a5070",
+          "outline-variant":        "#1e3a5f",
+          "error":                  "#ff6b6b",
+          "error-container":        "rgba(255,107,107,0.15)",
+          "warning":                "#f59e0b",
+          "background":             "#070d19",
+          "on-background":          "#f0f4ff",
+          "surface-container":      "#0d1b32",
+          "surface-container-low":  "#0a1628",
+          "surface-container-high": "#112240",
+          "surface-container-highest":"#162d4a",
+          "surface-container-lowest":"#050b14",
+          "surface-variant":        "#112240",
+          "glass-stroke":           "rgba(99,155,255,0.12)",
+          "primary":                "#00ffa3",
+          "on-primary":             "#003322",
+          "secondary":              "#22D3EE",
+          "tertiary":               "#6366F1"
+        },
+        borderRadius: {
+          DEFAULT: "0.375rem",
+          lg: "0.625rem",
+          xl: "0.875rem",
+          "2xl": "1.25rem",
+          full: "9999px"
+        },
+        spacing: {
+          "margin-desktop": "64px",
+          "element-gap":    "12px",
+          "section-gap":    "48px",
+          "gutter":         "24px",
+          "margin-mobile":  "20px",
+          "container-max":  "1280px"
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { min-height: max(884px, 100dvh); }
+  /* Shimmer animation on loader */
+  @keyframes shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position:  200% 0; }
+  }
+  .shimmer {
+    background: linear-gradient(90deg, #0d1b32 25%, #112240 50%, #0d1b32 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+</style>
+</head>
+<body class="bg-app-bg text-on-surface antialiased min-h-screen pb-[80px] pt-[64px]">
+
+<!-- ── TopAppBar ── -->
+<header class="glass-panel fixed top-0 w-full z-50 border-b border-outline-variant/20 transition-colors duration-200">
+  <div class="flex justify-between items-center px-margin-mobile h-[64px] w-full">
+    <button class="text-on-surface transition-colors duration-200 active:opacity-80 hover:bg-surface-high p-2 rounded-full flex items-center justify-center">
+      <span class="material-symbols-outlined" data-icon="menu">menu</span>
+    </button>
+    <h1 class="text-lg font-bold tracking-tight text-on-surface flex items-center gap-2">
+      <span class="text-neon-green drop-shadow-[0_0_8px_rgba(0,255,163,0.6)]">■</span>
+      ZoFranca CR
+    </h1>
+    <button class="text-on-surface transition-colors duration-200 active:opacity-80 hover:bg-surface-high p-2 rounded-full flex items-center justify-center">
+      <span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+    </button>
+  </div>
+</header>
+
+<!-- ── Main ── -->
+<main class="relative z-10 p-margin-mobile max-w-4xl mx-auto space-y-section-gap mt-element-gap">
+
+  <!-- Page Header -->
+  <section class="space-y-gutter">
+    <div>
+      <div class="flex items-center gap-3 mb-2">
+        <div class="w-1 h-8 rounded-full bg-neon-green shadow-[0_0_10px_rgba(0,255,163,0.5)]"></div>
+        <h2 class="text-2xl font-bold text-on-surface tracking-tight">Solicitudes Pendientes</h2>
+      </div>
+      <p class="text-on-surface-variant text-sm mt-1 ml-4">Revisa y gestiona las solicitudes de régimen de zona franca.</p>
+    </div>
+
+    <!-- Quick Stats Bar -->
+    <div class="grid grid-cols-3 gap-gutter">
+      <div class="glass-panel rounded-xl p-4 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(0,255,163,0.12);">
+          <span class="material-symbols-outlined text-neon-green text-[20px]" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+        </div>
+        <div>
+          <p class="text-[10px] uppercase tracking-widest text-on-surface-variant">Recomendadas</p>
+          <p class="text-xl font-bold text-neon-green" style="text-shadow: 0 0 10px rgba(0,255,163,0.4);" id="statsApproved">—</p>
+        </div>
+      </div>
+      <div class="glass-panel rounded-xl p-4 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(245,158,11,0.12);">
+          <span class="material-symbols-outlined text-warning text-[20px]" style="font-variation-settings: 'FILL' 1;">pending_actions</span>
+        </div>
+        <div>
+          <p class="text-[10px] uppercase tracking-widest text-on-surface-variant">En Revisión</p>
+          <p class="text-xl font-bold text-warning" id="statsReview">—</p>
+        </div>
+      </div>
+      <div class="glass-panel rounded-xl p-4 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(255,107,107,0.12);">
+          <span class="material-symbols-outlined text-error text-[20px]" style="font-variation-settings: 'FILL' 1;">cancel</span>
+        </div>
+        <div>
+          <p class="text-[10px] uppercase tracking-widest text-on-surface-variant">Rechazadas</p>
+          <p class="text-xl font-bold text-error" id="statsRejected">—</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Requests List ── -->
+  <section class="grid grid-cols-1 md:grid-cols-2 gap-gutter" id="solicitudesContainer">
+    <div id="tableLoader" class="text-center w-full col-span-1 md:col-span-2 py-12 text-on-surface-variant">
+      <div class="flex flex-col items-center gap-3">
+        <span class="material-symbols-outlined text-neon-green text-3xl spinner">progress_activity</span>
+        <span class="text-sm">Cargando solicitudes...</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── Bottom Nav (Mobile) ── -->
+<nav class="fixed bottom-0 w-full z-50 h-[80px] glass-panel border-t border-outline-variant/20 md:hidden pb-safe flex justify-around items-center px-2">
+  <a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-neon-green transition-colors rounded-xl w-20 h-16" href="index.html">
+    <span class="material-symbols-outlined mb-1">add_circle</span>
+    <span class="text-[10px] uppercase tracking-wider">Nueva</span>
+  </a>
+  <a class="flex flex-col items-center justify-center rounded-xl w-24 h-16 relative border text-neon-green"
+     style="background: rgba(0,255,163,0.08); border-color: rgba(0,255,163,0.25);"
+     href="#">
+    <span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">description</span>
+    <span class="text-[10px] uppercase tracking-wider font-bold">Requests</span>
+  </a>
+</nav>
+
+<script type="module" src="../js/app.js"></script>
+<script>
+  // Quick stats counter from DOM after load
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new MutationObserver(() => {
+      const cards = document.querySelectorAll('#solicitudesContainer article');
+      if (cards.length === 0) return;
+      let approved = 0, review = 0, rejected = 0;
+      cards.forEach(card => {
+        const badge = card.querySelector('[data-status]');
+        if (!badge) return;
+        const s = badge.dataset.status;
+        if (s === 'Recomendada') approved++;
+        else if (s === 'Revisar') review++;
+        else rejected++;
+      });
+      const a = document.getElementById('statsApproved');
+      const r = document.getElementById('statsReview');
+      const j = document.getElementById('statsRejected');
+      if (a) a.textContent = approved;
+      if (r) r.textContent = review;
+      if (j) j.textContent = rejected;
+      observer.disconnect();
+    });
+    observer.observe(document.getElementById('solicitudesContainer'), { childList: true, subtree: true });
+  });
+</script>
+</body>
+</html>

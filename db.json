@@ -1,0 +1,87 @@
+{
+  "solicitudes": [
+    {
+      "id": "1787247851648",
+      "empresa": "techcorp.sa",
+      "sector": "Manufactura",
+      "inversion": "100000",
+      "empleos": "86",
+      "fecha": "2026-08-20T17:44:08.978Z",
+      "evaluacion": {
+        "puntaje": 31,
+        "clasificacion": "Rechazada",
+        "fecha": "2026-08-20T17:44:11.649Z"
+      }
+    },
+    {
+      "id": "1787247968083",
+      "empresa": "techcorpo ltda.",
+      "sector": "Servicios",
+      "inversion": "1110000000",
+      "empleos": "1673839",
+      "fecha": "2026-08-20T17:46:06.060Z",
+      "evaluacion": {
+        "puntaje": 100,
+        "clasificacion": "Recomendada",
+        "fecha": "2026-08-20T17:46:08.083Z"
+      }
+    },
+    {
+      "id": "1787248536343",
+      "empresa": "techcorpo ltda.",
+      "sector": "Tecnología",
+      "inversion": "100000000",
+      "empleos": "129",
+      "documentos": [
+        {
+          "nombre": "Currículum CV Asesor Financiero Masculino Básico Negro (1).pdf",
+          "tamaño": 277135
+        }
+      ],
+      "fecha": "2026-08-20T17:55:34.284Z",
+      "evaluacion": {
+        "puntaje": 100,
+        "clasificacion": "Recomendada",
+        "fecha": "2026-08-20T17:55:36.366Z"
+      }
+    },
+    {
+      "id": "1787257792069",
+      "empresa": "techcorpo ltda.",
+      "sector": "Tecnología",
+      "inversion": "100000",
+      "empleos": "236778",
+      "documentos": [
+        {
+          "nombre": "Currículum CV Asesor Financiero Masculino Básico Negro.pdf",
+          "tamaño": 273368
+        }
+      ],
+      "fecha": "2026-08-20T20:29:49.950Z",
+      "evaluacion": {
+        "puntaje": 31,
+        "clasificacion": "Rechazada",
+        "fecha": "2026-08-20T20:29:52.069Z"
+      }
+    },
+    {
+      "id": "1787258125854",
+      "empresa": "techcorpo ltda.",
+      "sector": "Servicios",
+      "inversion": "1000000",
+      "empleos": "1636446473",
+      "documentos": [
+        {
+          "nombre": "Currículum CV Asesor Financiero Masculino Básico Negro (1).pdf",
+          "tamaño": 277135
+        }
+      ],
+      "fecha": "2026-08-20T20:35:23.795Z",
+      "evaluacion": {
+        "puntaje": 100,
+        "clasificacion": "Recomendada",
+        "fecha": "2026-08-20T20:35:25.855Z"
+      }
+    }
+  ]
+}
